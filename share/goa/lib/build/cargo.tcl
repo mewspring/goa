@@ -46,12 +46,16 @@ proc build { } {
 	set ::env(RUSTFLAGS) $rustflags
 	set ::env(RUST_STD_FREEBSD_12_ABI) 1
 
+	set cross_toml_src [file join $project_dir "Cross.toml"]
+	#set cross_toml_dst [file join $build_dir "x86_64"]
+	file copy -force $cross_toml_src $build_dir
+
 	set fake_libs { execinfo pthread gcc_s c m rt util memstat kvm procstat devstat }
 
 	generate_static_stubs $fake_libs
 
 	set cmd { }
-	lappend cmd cargo build
+	lappend cmd ~/Desktop/cross/target/debug/cross build
 	if {!$debug} {
 		lappend cmd "-r" }
 	lappend cmd "--target" x86_64-unknown-freebsd
@@ -59,7 +63,7 @@ proc build { } {
 	lappend cmd --config profile.release.panic="abort"
 	lappend cmd --config profile.dev.panic="abort"
 
-	set copy [list cp -f -l]
+	set copy [list cp -f]
 
 	if {$verbose == 1} {
 		lappend cmd "-vv"

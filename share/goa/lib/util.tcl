@@ -563,7 +563,7 @@ proc mirror_source_dir_to_build_dir { } {
 		if {[file exists $path]} {
 			file delete $path }
 
-		file link -symbolic $path $target
+		file copy $target $path
 	}
 
 	#

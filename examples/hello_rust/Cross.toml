@@ -1,0 +1,12 @@
+[build]
+pre-build = [
+  "apt-get install wget",
+  "apt-get install unzip",
+  "mkdir -p /tmp/genode_toolchain",
+  "wget -O /tmp/genode_toolchain/genode-toolchain-23.05.tar.xz https://github.com/mewmew/genode-toolchain/raw/master/genode-toolchain-23.05.tar.xz",
+  "cd /tmp/genode_toolchain && tar -xJvf genode-toolchain-23.05.tar.xz",
+  "mkdir -p /usr/local",
+  "cp -r /tmp/genode_toolchain/usr/local/genode /usr/local/",
+  "wget -O /tmp/goa.zip https://github.com/genodelabs/goa/archive/refs/heads/master.zip",
+  "unzip goa.zip"
+]
